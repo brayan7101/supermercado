@@ -1,0 +1,85 @@
+/ Clase Cliente del modelo
+public class Cliente {
+    private String nombre;
+    private String cargo;
+
+    public Cliente(String nombre, String cargo) {
+        this.nombre = nombre;
+        this.cargo = cargo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+}
+
+// Clase Vista
+public class Vista {
+    public void mostrarClientes(List<Cliente> clientes) {
+        System.out.println("Clientes:");
+        for (Cliente cliente : clientes) {
+            System.out.println("Nombre: " + cliente.getNombre() + ", Cargo: " + cliente.getCargo());
+        }
+    }
+
+    public String obtenerCargo() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese el cargo del cliente: ");
+        return scanner.nextLine();
+    }
+}
+
+// Clase Controlador
+public class Controlador {
+    private List<Cliente> clientes;
+    private Vista vista;
+
+    public Controlador(List<Cliente> clientes, Vista vista) {
+        this.clientes = clientes;
+        this.vista = vista;
+    }
+
+    public void consultarClientesPorCargo() {
+        String cargo = vista.obtenerCargo();
+        List<Cliente> clientesPorCargo = new ArrayList<>();
+
+        for (Cliente cliente : clientes) {
+            if (cliente.getCargo().equalsIgnoreCase(cargo)) {
+                clientesPorCargo.add(cliente);
+            }
+        }
+
+        vista.mostrarClientes(clientesPorCargo);
+    }
+}
+
+_____________________________________________________________________
+
+Clientes
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Aplicacion {
+    public static void main(String[] args) {
+        // Crear  clientes 
+        List<Cliente> clientes = new ArrayList<>();
+        clientes.add(new Cliente("Brayam", "Cajero"));
+        clientes.add(new Cliente("Edwin", "Gerente"));
+        clientes.add(new Cliente("Maribel", "Cajero"));
+        clientes.add(new Cliente("Luis", "Supervisor"));
+
+        // Configurar MVC
+        Vista vista = new Vista();
+        Controlador controlador = new Controlador(clientes, vista);
+
+        // Consultar clientes por cargo
+        controlador.consultarClientesPorCargo();
+    }
+}
+
+
